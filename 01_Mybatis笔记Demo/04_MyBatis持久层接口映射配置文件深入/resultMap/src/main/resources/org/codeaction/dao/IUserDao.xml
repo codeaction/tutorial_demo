@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.codeaction.dao.IUserDao">
+    <!--
+          resultMap标签建立User实体和数据库表的对应关系;
+          id属性：给定一个唯一标识，是给查询select标签引用用的;
+          type属性：指定实体类的全限定类名。
+    -->
+    <resultMap id="userMap" type="org.codeaction.domain.User">
+        <!--
+            id标签：用于指定主键字段
+            result标签：用于指定非主键字段
+            column属性：用于指定数据库列名
+            property属性：用于指定实体类属性名称
+	    -->
+        <id property="userId" column="id" />
+        <result property="userName" column="username" />
+        <result property="userBirthday" column="birthday" />
+        <result property="userSex" column="sex" />
+        <result property="userAddress" column="address" />
+    </resultMap>
+    <!--
+          resultMap属性用来引用上面配置的resultMap，值为上面的resultMap的id
+    -->
+    <select id="findAll" resultMap="userMap">
+        select * from user
+    </select>
+</mapper>

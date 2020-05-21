@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.codeaction.dao.IUserDao">
+    <resultMap id="userAccountMap" type="org.codeaction.domain.User">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="birthday" column="birthday"></result>
+        <result property="sex" column="sex"></result>
+        <result property="address" column="address"></result>
+        <collection property="accounts" ofType="org.codeaction.domain.Account">
+            <id property="id" column="aid"></id>
+            <result property="money" column="money"></result>
+            <result property="uid" column="uid"></result>
+        </collection>
+    </resultMap>
+    <!-- 配置查询所有 -->
+    <select id="findAllUser" resultMap="userAccountMap">
+        select
+            u.*, a.id aid, a.MONEY money, a.UID uid
+        from
+	        user u left join account a
+        on
+	        u.id = a.UID;
+    </select>
+    <select id="findById" parameterType="java.lang.Integer" resultType="org.codeaction.domain.User">
+        select * from user where id=#{id}
+    </select>
+</mapper>

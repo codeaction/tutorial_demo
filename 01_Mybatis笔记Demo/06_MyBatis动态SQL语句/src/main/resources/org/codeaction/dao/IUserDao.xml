@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.codeaction.dao.IUserDao">
+    <sql id="defaultSelect">
+        select * from user
+    </sql>
+    <!-- 配置查询所有 -->
+    <select id="findAll" resultType="org.codeaction.domain.User">
+        <include refid="defaultSelect"></include>
+    </select>
+    <select id="findById" parameterType="java.lang.Integer" resultType="org.codeaction.domain.User">
+        <include refid="defaultSelect"></include>
+        where id=#{id}
+    </select>
+    <select id="findByName" parameterType="java.lang.String" resultType="org.codeaction.domain.User">
+        <include refid="defaultSelect"></include>
+        where username like #{username}
+    </select>
+    <select id="findTotal" resultType="java.lang.Integer">
+        select count(id) from user
+    </select>
+    <select id="findUserByVo" parameterType="org.codeaction.domain.QueryVo" resultType="org.codeaction.domain.User">
+        <include refid="defaultSelect"></include>
+        where username like #{user.username }
+    </select>
+    <select id="findByCondition" parameterType="org.codeaction.domain.User" resultType="org.codeaction.domain.User">
+        <include refid="defaultSelect"></include>
+        <where>
+            <if test="username != null">
+               and username = #{username}
+            </if>
+            <if test="sex != null">
+               and sex = #{sex}
+            </if>
+        </where>
+    </select>
+    <select id="findUserByIds" parameterType="org.codeaction.domain.QueryVo" resultType="org.codeaction.domain.User">
+        <include refid="defaultSelect"></include>
+        <where>
+            <if test="ids != null and ids.size() > 0">
+                <foreach collection="ids" open="id in (" close=")" separator="," item="id">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+</mapper>

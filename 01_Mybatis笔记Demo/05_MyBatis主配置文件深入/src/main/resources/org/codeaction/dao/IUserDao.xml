@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.codeaction.dao.IUserDao">
+    <!-- 配置查询所有 -->
+    <!-- 使用了别名 -->
+    <select id="findAll" resultType="user">
+        select * from user
+    </select>
+    <!-- 使用了别名 -->
+    <select id="findUserByVo" parameterType="queryvo" resultType="user">
+        select * from user where username like #{user.username}
+    </select>
+</mapper>
