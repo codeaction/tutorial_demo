@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 配置service -->
+    <bean id="accountService" class="org.codeaction.service.impl.AccountServiceImpl">
+        <!-- 通过set方法注入dao实现类的对象 -->
+        <property name="accountDao" ref="accountDao"></property>
+    </bean>
+    <!-- 配置dao -->
+    <bean id="accountDao" class="org.codeaction.dao.impl.AccountDaoImpl">
+        <!-- 通过set方法注入queryRunner实现类的对象 -->
+        <property name="queryRunner" ref="queryRunner"></property>
+    </bean>
+    <!-- 配置queryRunner -->
+    <bean id="queryRunner" class="org.apache.commons.dbutils.QueryRunner" scope="prototype">
+        <!-- 通过构造方法注入连接池 -->
+        <constructor-arg name="ds" ref="dataSource"></constructor-arg>
+    </bean>
+    <!-- 配置连接池 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!-- 通过set方法注入四大参数 -->
+        <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/springlearn"></property>
+        <property name="user" value="root"></property>
+        <property name="password" value="123456"></property>
+    </bean>
+</beans>
