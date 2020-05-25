@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="now" class="java.util.Date"></bean>
+    <bean id="user1" class="org.codeaction.bean.User1">
+        <!-- 通过构造函数注入属性 -->
+        <constructor-arg name="name" value="Tom"></constructor-arg>
+        <constructor-arg name="age" value="10"></constructor-arg>
+        <constructor-arg name="address" value="上海"></constructor-arg>
+        <constructor-arg name="birthday" ref="now"></constructor-arg>
+    </bean>
+
+    <bean id="user2" class="org.codeaction.bean.User2">
+        <!-- 通过set方法注入 -->
+        <property name="name" value="Bob"></property>
+        <property name="age" value="20"></property>
+        <property name="address" value="北京"></property>
+        <property name="birthday" ref="now"></property>
+    </bean>
+
+    <!-- 注入复杂类型属性 -->
+    <bean id="user3" class="org.codeaction.bean.User3">
+        <!-- 注入复杂类型属性 -->
+        <property name="hobbies1">
+            <set>
+                <value>旅游</value>
+                <value>蹦极</value>
+                <value>马拉松</value>
+            </set>
+        </property>
+        <property name="hobbies2">
+            <array>
+                <value>篮球</value>
+                <value>读书</value>
+                <value>帆船</value>
+            </array>
+        </property>
+        <property name="hobbies3">
+            <list>
+                <value>太极</value>
+                <value>自由搏击</value>
+                <value>咏春</value>
+            </list>
+        </property>
+        <property name="idInfo1">
+            <props>
+                <prop key="address">广州</prop>
+                <prop key="height">180</prop>
+            </props>
+        </property>
+        <property name="idInfo2">
+            <map>
+                <entry key="name" value="John"></entry>
+                <entry key="age">
+                    <value>20</value>
+                </entry>
+                <entry key="gender" value="男"></entry>
+            </map>
+        </property>
+    </bean>
+</beans>
