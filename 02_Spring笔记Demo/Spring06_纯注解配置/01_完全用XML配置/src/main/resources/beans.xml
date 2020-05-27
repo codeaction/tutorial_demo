@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 配置person -->
+    <bean id="person" class="org.codeaction.bean.Person">
+       <property name="username" value="Tom"></property>
+       <property name="age" value="20"></property>
+       <property name="gender" value="男"></property>
+       <property name="birthday" ref="birthday"></property>
+   </bean>
+    <!-- 配置birthday -->
+    <bean id="birthday" class="java.time.LocalDateTime" factory-method="of">
+        <constructor-arg name="date" ref="date"/>
+        <constructor-arg name="time"  ref="time"/>
+    </bean>
+
+    <bean id="date" class="java.time.LocalDate" factory-method="of">
+        <constructor-arg name="year" value="2000"/>
+        <constructor-arg name="month" value="OCTOBER"/>
+        <constructor-arg name="dayOfMonth" value="15"/>
+    </bean>
+
+    <bean id="time" class="java.time.LocalTime" factory-method="of">
+        <constructor-arg name="hour" value="10" />
+        <constructor-arg name="minute" value="10" />
+        <constructor-arg name="second" value="20" />
+    </bean>
+</beans>
