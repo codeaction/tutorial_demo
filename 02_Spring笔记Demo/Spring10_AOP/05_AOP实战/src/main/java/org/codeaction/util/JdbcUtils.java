@@ -12,12 +12,12 @@ import java.sql.SQLException;
 @Component
 @Aspect
 public class JdbcUtils {
-    private static DataSource dataSource;
-    private static ThreadLocal<Connection> tl = new ThreadLocal<Connection>();
-    //获取连接池对象
-    public static DataSource getDataSource() {
-          return dataSource;
-    }
+	private static DataSource dataSource;
+	private static ThreadLocal<Connection> tl = new ThreadLocal<Connection>();
+	//获取连接池对象
+	public static DataSource getDataSource() {
+		  return dataSource;
+	}
 
 	@Autowired
 	public void setDataSource(DataSource dataSource) {
@@ -25,20 +25,22 @@ public class JdbcUtils {
 	}
 
 	@Pointcut("execution(* org.codeaction.service.impl.*.*(..))")
-	public void pt() {}
+	public void pt() {
+
+	}
 
 	//获取连接
-    public static Connection getConnection() throws SQLException {
-    	Connection conn = tl.get();
-    	if(conn == null) {
-    		return dataSource.getConnection();
-    	}
-    	return conn;
-    }
-    //开启事务
+	public static Connection getConnection() throws SQLException {
+		Connection conn = tl.get();
+		if(conn == null) {
+			return dataSource.getConnection();
+		}
+		return conn;
+	}
+	//开启事务
 	@Before("pt()")
-    public static void beginTransaction() throws SQLException {
-    	Connection conn = tl.get();
+	public static void beginTransaction() throws SQLException {
+		Connection conn = tl.get();
 		if(conn != null) {
 			throw new SQLException("已经开启事务，不能重复开启");
 		}
@@ -48,8 +50,8 @@ public class JdbcUtils {
 	}
     //提交事务
 	@AfterReturning("pt()")
-    public static void commitTransaction() throws SQLException {
-    	Connection conn = tl.get();
+	public static void commitTransaction() throws SQLException {
+		Connection conn = tl.get();
 		if(conn == null) {
 			throw new SQLException("连接为空，不能提交事务");
 		}
@@ -57,9 +59,9 @@ public class JdbcUtils {
 		conn.close();
 		tl.remove();
 	}
-    //回滚事务
+	//回滚事务
 	@AfterThrowing("pt()")
-    public static void rollbackTransaction() throws SQLException {
+	public static void rollbackTransaction() throws SQLException {
 		Connection conn = tl.get();
 		if (conn == null) {
 			throw new SQLException("连接为空，不能回滚事务");
