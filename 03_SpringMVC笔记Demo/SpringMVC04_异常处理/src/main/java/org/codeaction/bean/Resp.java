@@ -1,5 +1,8 @@
 package org.codeaction.bean;
 
+/**
+ * 自定义响应类，用于响应JSON数据
+ */
 public class Resp {
     private String msg;
 
