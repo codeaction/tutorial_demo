@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Mapper
 public interface IAccountDao {
     @Select("select * from account")
     List<Account> findAll();
